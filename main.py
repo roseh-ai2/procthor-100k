@@ -15,7 +15,7 @@ except:
 def load_dataset() -> prior.DatasetDict:
     """Load the houses dataset."""
     data = {}
-    for split, size in [("train", 10_000), ("val", 1_000), ("test", 1_000)]:
+    for split, size in [("train", 10_000)]:
         with gzip.open(f"{split}.jsonl.gz", "r") as f:
             houses = [line for line in tqdm(f, total=size, desc=f"Loading {split}")]
         data[split] = LazyJsonDataset(
