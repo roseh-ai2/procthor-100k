@@ -7,7 +7,7 @@ from tqdm import tqdm
 import prior
 
 try:
-    from prior import NoCacheLazyJsonDataset
+    from prior import LazyJsonDataset
 except:
     raise ImportError("Please update the prior package (pip install --upgrade prior).")
 
@@ -21,7 +21,7 @@ def load_dataset() -> prior.DatasetDict:
     for split, size in zip(("train","val","test"),(20, 20, 20)):
         with gzip.open(f"dataset_files/{split}_tiny.gzip", "r") as f:
             houses = [line for line in tqdm(f, total=size, desc=f"Loading {split}")]
-        data[split] = NoCacheLazyJsonDataset(
+        data[split] = LazyJsonDataset(
             data=houses, dataset="procthor-100k", split=split
         )
     return prior.DatasetDict(**data)
